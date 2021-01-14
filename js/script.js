@@ -43,3 +43,17 @@ clearBtn.addEventListener("click", function (e) {
     taskList.removeChild(taskList.firstChild);
   }
 });
+
+//filter task
+filter.addEventListener("keyup", function (e) {
+  let text = e.target.value.toLowerCase();
+
+  document.querySelectorAll("li").forEach((task) => {
+    let item = task.firstChild.textContent;
+    if (item.toLocaleLowerCase().indexOf(text) != -1) {
+      task.style.display = "block";
+    } else {
+      task.style.display = "none";
+    }
+  });
+});
