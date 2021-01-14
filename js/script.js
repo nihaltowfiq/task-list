@@ -1,10 +1,12 @@
+// define UI element
 let form = document.querySelector("#task_form");
 let taskList = document.querySelector("ul");
 let clearBtn = document.querySelector("#clear_task");
 let filter = document.querySelector("#task_filter");
 let taskInput = document.querySelector("#new_task");
 
-// define event listener
+// define event listener >>
+// add task
 form.addEventListener("submit", function addTask(e) {
   if (taskInput.value === "") {
     alert("Add a Task!");
@@ -20,4 +22,15 @@ form.addEventListener("submit", function addTask(e) {
     taskInput.value = "";
   }
   e.preventDefault();
+});
+
+// remove task
+taskList.addEventListener("click", function removeTask(e) {
+  if (e.target.hasAttribute("href")) {
+    if (confirm("Are you sure?")) {
+      let element = e.target.parentElement;
+      element.remove();
+      console.log(e.target);
+    }
+  }
 });
