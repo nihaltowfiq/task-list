@@ -6,6 +6,7 @@ let filter = document.querySelector("#task_filter");
 let taskInput = document.querySelector("#new_task");
 
 // define event listener >>
+
 // add task
 form.addEventListener("submit", function (e) {
   if (taskInput.value === "") {
@@ -19,8 +20,12 @@ form.addEventListener("submit", function (e) {
     link.innerHTML = "x";
     li.appendChild(link);
     taskList.appendChild(li);
+
+    storeTaskInLocalStorage(taskInput.value);
+
     taskInput.value = "";
   }
+
   e.preventDefault();
 });
 
@@ -36,7 +41,7 @@ taskList.addEventListener("click", function (e) {
 });
 
 // clear tasks
-clearBtn.addEventListener("click", function (e) {
+clearBtn.addEventListener("click", function () {
   //   taskList.innerHTML = "";
   // OR
   while (taskList.firstChild) {
@@ -57,3 +62,36 @@ filter.addEventListener("keyup", function (e) {
     }
   });
 });
+
+//get task from Local Storage when page loaded;
+document.addEventListener("DOMContentLoaded", function () {
+  let tasks;
+  if (localStorage.getItem("tasks") === null) {
+    tasks = [];
+  } else {
+    tasks = JSON.parse(localStorage.getItem("tasks"));
+  }
+
+  tasks.forEach((task) => {
+    let li = document.createElement("li");
+    li.appendChild(document.createTextNode(task + " "));
+    let link = document.createElement("a");
+    link.setAttribute("href", "#");
+    link.innerHTML = "x";
+    li.appendChild(link);
+    taskList.appendChild(li);
+  });
+});
+
+// store data in Local Storage
+const storeTaskInLocalStorage = function (task) {
+  let tasks;
+  if (localStorage.getItem("tasks") === null) {
+    tasks = [];
+  } else {
+    tasks = JSON.parse(localStorage.getItem("tasks"));
+  }
+  tasks.push(task);
+
+  localStorage.setItem("tasks", JSON.stringify(tasks));
+};
