@@ -47,6 +47,8 @@ clearBtn.addEventListener("click", function () {
   while (taskList.firstChild) {
     taskList.removeChild(taskList.firstChild);
   }
+
+  localStorage.clear();
 });
 
 //filter task
