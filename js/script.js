@@ -25,7 +25,6 @@ form.addEventListener("submit", function (e) {
 
     taskInput.value = "";
   }
-
   e.preventDefault();
 });
 
@@ -35,7 +34,8 @@ taskList.addEventListener("click", function (e) {
     if (confirm("Are you sure?")) {
       let element = e.target.parentElement;
       element.remove();
-      console.log(e.target);
+
+      removeFromLocalStorage(element);
     }
   }
 });
@@ -92,6 +92,27 @@ const storeTaskInLocalStorage = function (task) {
     tasks = JSON.parse(localStorage.getItem("tasks"));
   }
   tasks.push(task);
+
+  localStorage.setItem("tasks", JSON.stringify(tasks));
+};
+
+// remove data from Local Storage
+const removeFromLocalStorage = function (taskItem) {
+  let tasks;
+  if (localStorage.getItem("tasks") === null) {
+    tasks = [];
+  } else {
+    tasks = JSON.parse(localStorage.getItem("tasks"));
+  }
+
+  let li = taskItem;
+  li.removeChild(li.lastChild);
+
+  tasks.forEach((task, index) => {
+    if (li.textContent.trim() === task) {
+      tasks.splice(index, 1);
+    }
+  });
 
   localStorage.setItem("tasks", JSON.stringify(tasks));
 };
